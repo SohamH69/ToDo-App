@@ -1,0 +1,119 @@
+.container{
+    position: relative;
+}
+.time{
+    justify-content: center;
+    padding: 10px;
+    display: flex;
+}
+.clock{
+    font-size: 48px;
+}
+#colon{
+    text-align: center;
+    padding:20px;
+}
+#hour,#min,#sec{
+    padding:20px;
+    border: 2px solid red;
+    border-radius: 10%;
+}
+#ampm{
+    padding:20px;
+    margin-left: 10px;
+}
+.date{
+    text-align: center;
+    font-size: 20px;
+    padding: 16px;
+}
+
+.quotes{
+    text-align: center;
+}
+.quotes p{
+    font-size: 28px;
+    background-color: yellowgreen;
+    padding: 8px;
+}
+.quotes #text,#author{
+    font-size: 24px;
+}
+
+.taskDetails{
+    font-size: 24px;
+    text-align: center;
+}
+.taskDetails .todo{
+    padding: 24px;
+}
+
+
+
+.sectionHead{
+    display: flex;
+    width: 100%;
+}
+.sectionHead p{
+    width: 100%;
+    background-color: yellowgreen;
+    border: 1px solid black;
+}
+.allTasks{
+    display: flex;
+    width: 100%;
+    
+}
+.allTasks #taskList,#completedTask{
+    width: 100%;
+    border:1px solid black;
+}
+.allTasks #taskList li{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    text-align: center;
+    padding: 12px;
+    list-style: none;
+    background-color: #ebb2b2;
+    border: 1px solid black;
+}
+.allTasks #completedTask li{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    text-align: center;
+    padding: 12px;
+    list-style: none;
+    background-color: #b2ebc5;
+    border: 1px solid black;
+}
+input.largerCheckbox{
+    transform: scale(2);
+}
+.addTask{
+    background: rgb(0, 204, 255);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    height: 32px;
+    padding: 8px;
+    width: 50%;
+}
+.actionOption{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+}
+#taskInput{
+    width: 100%;
+    margin-right: 16px;
+    border: 3px solid black;
+    border-radius: 4px;
+}
+#taskInput::placeholder{
+    text-align: center;
+    color: rgb(122, 122, 122);
+    font-size: 18px;
+}

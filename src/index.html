@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d55af6c5df.js" crossorigin="anonymous"></script>
+    <title>ToDo App</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="date">
+            <div id="date"></div>
+        </div>
+        <div class="time">
+            <div class="clock" id="hour"></div>
+            <div class="clock" id="colon">:</div>
+            <div class="clock" id="min"></div>
+            <div class="clock" id="colon">:</div>
+            <div class="clock" id="sec"></div>
+            <div class="clock" id="ampm"></div>
+        </div>
+        <div class="quotes">
+            <p>Quotes of the Day</p>
+            <div class="" id="text"></div>
+            <div class="" id="author"></div>
+        </div>
+        <div class="taskDetails">
+            <div class="todo">
+                <h1>ToDo</h1>
+                <div class="actionOption">
+                    <input type="text" id="taskInput" placeholder="Add a new task">
+                    <button onclick="addTask()" class="addTask">Add Task</button>
+                </div>
+            </div>
+                <!-- <table>
+                <tr>
+                    <th>Task to be Completed</th>
+                    <th>Completed Task</th>
+                </tr>
+                <tr>
+                    <td><div id="taskList"></div></td>
+                    <td><div id="completedTask"></div></td>
+                </tr>
+            </table> -->
+            <div class="sectionHead">
+                <p>Task to be Completed</p>
+                <p>Completed Task</p>
+            </div>
+            <div class="allTasks">
+                <div id="taskList"></div>
+                <div id="completedTask"></div>
+            </div>
+    </div>
+    </div>
+<script src="first.js"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDwmw_xH8Kal3eR6qh9BBkolFHs1BIp4HQ",
+    authDomain: "todo-app-71cc3.firebaseapp.com",
+    projectId: "todo-app-71cc3",
+    storageBucket: "todo-app-71cc3.appspot.com",
+    messagingSenderId: "990766146928",
+    appId: "1:990766146928:web:f9565e7e16dc4f64f1dbb5"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
+</body>
+</html>
