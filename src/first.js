@@ -122,18 +122,30 @@ function showTime() {
 
 
   //////////////////////// Task section //////////////////////////
-
+    
 
     // Get references to HTML elements
     const taskInput = document.getElementById("taskInput");
     const taskList = document.getElementById("taskList");
     const completedTask = document.getElementById("completedTask");
 
+    
     // Event listener for adding a new task
     window.addTask = function () {
+
       const taskText = taskInput.value.trim();
-      console.log(taskText);
+      
       if (taskText !== "") {
+        
+        
+      const taskId = ref.push().key;
+      const task = {
+        id: taskId,
+        text: taskText,
+        completed: false
+      };
+
+        ref.child(taskId).set(task);
         const li = document.createElement("li");
         li.innerHTML = `
           <input type="checkbox" class="largerCheckbox" onchange="completeTask(this)">
@@ -142,48 +154,43 @@ function showTime() {
         `;
         taskList.appendChild(li);
         taskInput.value = "";
-
-          // Send the task to the backend
-    fetch('http://localhost:3000/addTasks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ tasks: [{ name: taskText, completed: false }] }),
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
-
-      }   
+      }
     }
 
     // Event listener for completing a task
-    window.completeTask = function (checkbox) {
+    window.completeTask = function (checkbox, taskId) {
       const li = checkbox.closest("li");
       if (checkbox.checked) {
-
+        ref.child(taskId).update({completed: true});
         //span.style.textDecoration = "line-through";
         completedTask.appendChild(li);
        
         //li.remove()
       } else {
+        ref.child(taskId).update({completed: false});
         taskList.appendChild(li);
       }
     }
     // Event listener for removing a task
-    window.removeTask = function (button) {
+    window.removeTask = function (button, taskId) {
+
       const li = button.closest("li");
       li.remove();
+      ref.child(taskId).remove();
     }
     
+  
     // Event listener for pressing Enter key
     taskInput.addEventListener("keyup", function (event) {
       if (event.key === "Enter") {
         addTask();
       }
     });
-    });
+
+
+    
+
+});
 
 
   
