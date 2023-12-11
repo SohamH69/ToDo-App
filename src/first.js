@@ -137,15 +137,6 @@ function showTime() {
       
       if (taskText !== "") {
         
-        
-      const taskId = ref.push().key;
-      const task = {
-        id: taskId,
-        text: taskText,
-        completed: false
-      };
-
-        ref.child(taskId).set(task);
         const li = document.createElement("li");
         li.innerHTML = `
           <input type="checkbox" class="largerCheckbox" onchange="completeTask(this)">
@@ -158,16 +149,14 @@ function showTime() {
     }
 
     // Event listener for completing a task
-    window.completeTask = function (checkbox, taskId) {
+    window.completeTask = function (checkbox) {
       const li = checkbox.closest("li");
       if (checkbox.checked) {
-        ref.child(taskId).update({completed: true});
         //span.style.textDecoration = "line-through";
         completedTask.appendChild(li);
        
         //li.remove()
       } else {
-        ref.child(taskId).update({completed: false});
         taskList.appendChild(li);
       }
     }
@@ -176,7 +165,6 @@ function showTime() {
 
       const li = button.closest("li");
       li.remove();
-      ref.child(taskId).remove();
     }
     
   
