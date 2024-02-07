@@ -1,184 +1,368 @@
-document.addEventListener("DOMContentLoaded", function () {
-function showTime() {
-    var d = new Date();
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var ampm = "AM";
-    if (h > 12) {
-      ampm = "PM";
-      h -= 12;
-    }
-    hours = h.toString().padStart(2, '0')
-    min = m.toString().padStart(2, '0')
-    sec = s.toString().padStart(2, '0')
-    document.getElementById("hour").innerHTML = hours
-    document.getElementById("min").innerHTML = min
-    document.getElementById("sec").innerHTML = sec
-    document.getElementById("ampm").innerHTML = ampm
-    
-    //document.getElementById("clock").innerHTML = h.toString().padStart(2, '0') + ":" + m.toString().padStart(2, '0') + ":" + s.toString().padStart(2, '0') + " " + ampm;
-    
-    //Date
-    let day = d.getDate();
-    let month = d.getMonth()+1;
-    let year = d.getFullYear();
-    let monthName = "";
-    
-    if (month == 1){
-      monthName = "January"
-    }
-    else if (month == 2){
-      monthName = "February"
-    }
-    else if (month == 3){
-      monthName = "March"
-    }
-    else if (month == 4){
-      monthName = "April"
-    }
-    else if (month == 5){
-      monthName = "May"
-    }
-    else if (month == 6){
-      monthName = "June"
-    }
-    else if (month == 7){
-      monthName = "July"
-    }
-    else if (month == 8){
-      monthName = "August"
-    }
-    else if (month == 9){
-      monthName = "September"
-    }
-    else if (month == 10){
-      monthName = "October"
-    }
-    else if (month == 11){
-      monthName = "November"
-    }
-    else {
-      monthName = "December"
-    }
+$(document).ready(function(){
+  const date = new Date();
+  function currentDay(){
 
-    let dayType = ""
-    if (day == 1){
-      dayType = "st"
-    }
-    else if (day == 2){
-      dayType = "nd"
-    }
-    else if (day == 3){
-      dayType = "rd"
-    }
-    else if (day > 3){
-      dayType = "th"
-    }
-    else{
-      dayType = "Invalid"
-    }
 
-    let currentDate = day + dayType +' '+monthName+', '+year;
-    
-    document.getElementById("date").innerHTML = currentDate;
+  ///////// DATE //////////
+
+  // const date = new Date(); 
+  let day = ("" + date.getDate()).slice(-2);
+  let month = ("0" + (date.getMonth() + 1)).slice(-2);
+  let year = date.getFullYear();
+  let time = date.getTime();
+  
+  if(day == 1){
+    day = (day) + 'st';
+  }
+  else if (day == 2){
+    day = (day) + 'nd';
+  }
+  else if (day == 3){
+    day = (day) + 'rd';
+  }
+  else{
+    day = (day) + 'th';
+  }
+
+  //Month
+  if(month == 1){
+    month = 'January';
+  }
+  else if(month == 2){
+    month = 'February';
+  }
+  else if(month == 3){
+    month = 'March';
+  }
+  else if(month == 4){
+    month = 'April';
+  }
+  else if(month == 5){
+    month = 'May';
+  }
+  else if(month == 6){
+    month = 'June';
+  }
+  else if(month == 7){
+    month = 'July';
+  }
+  else if(month == 8){
+    month = 'August';
+  }
+  else if(month == 9){
+    month = 'September';
+  }
+  else if(month == 10){
+    month = 'October';
+  }
+  else if(month == 11){
+    month = 'November';
+  }
+  else if(month == 12){
+    month = 'December';
+  }
+
+  let today = (day)+' '+ (month)+ ', '+ date.getFullYear();
+  $('#currentDate').text(today);
+
+
+}
+
+//////----------- TIME ----------------//////////
+
+function currentTime(){
+  let hh = date.getHours();
+  let mm = date.getMinutes();
+  let ss = date.getSeconds();
+  let session = "AM";
+
+  if(hh == 0){
+    hh = 12;
+  }
+  if(hh > 12){
+    hh = hh - 12;
+    session = "PM";
+  }
+  if(hh < 10){
+    hh = "0"+hh;
+  }
+  if(mm < 10){
+    mm = "0"+mm;
+  }
+  let time = hh +':'+mm + ' '+session;
+  $('#currentTime').text(time);
+
+}
+
+//------- Daily Quotes --------//
+
+async function dailyQuotes(){
+  const response = await fetch("https://type.fit/api/quotes");
+  const quotes = await response.json();
+  randomIndex = Math.floor(Math.random()*quotes.length);
+  author = quotes[randomIndex].author.split(',')[0]
+  // if(author === 'type.fit'){
+  //   author = 'Anonymous';
+  // }
+  author = author === 'type.fit' ? 'Anonymous' : author;
+  randomQuote = quotes[randomIndex].text + ' - ' + author; 
+  $("#quote-text").text(randomQuote);
+  // console.log(quotes)
+}
+
+
+setInterval(dailyQuotes, 10000);
+
+currentDay();
+currentTime();
+dailyQuotes();
+  
+  
+
+
+
+
+
+
+
+$("#pomodoroTimer").click();
+
+
+
+
+// function startTimer(startingMinutes) {
+//   $("#pomoDisplay").text(`${startingMinutes}:00`);
+//   $(".timer-button").prop('disabled', true); // Disable all timer buttons
+//   $('#pause, #reset').hide();
+//   return start(startingMinutes);
+// }
+
+
+
+$("#pomodoroTimer").click(function(){
+  let startingMinutes = 25;
+  $("#pomoDisplay").text(`${startingMinutes}:00`);
+  $("#pomodoroTimer").addClass('btn-success').removeClass('btn-light');
+  $('#shortBreakTimer, #longBreakTimer').addClass('btn-light').removeClass('btn-success');
+  $('#pause, #reset').hide();
+  return start(startingMinutes);
+})
+
+
+
+$("#shortBreakTimer").click(function(){
+  let startingMinutes = 5;
+  $("#pomoDisplay").text(`0${startingMinutes}:00`);
+  $("#shortBreakTimer").addClass('btn-success').removeClass('btn-light');
+  $('#pomodoroTimer, #longBreakTimer').addClass('btn-light').removeClass('btn-success');
+  $('#pause, #reset').hide();
+  return start(startingMinutes);
+})
+
+ $("#longBreakTimer").click(function(){
+  let startingMinutes = 15;
+  $("#pomoDisplay").text(`${startingMinutes}:00`);
+  $("#longBreakTimer").addClass('btn-success').removeClass('btn-light');
+  $('#pomodoroTimer, #shortBreakTimer').addClass('btn-light').removeClass('btn-success');
+  $('#pause, #reset').hide();
+  return start(startingMinutes);
+})
+
+})
+
+  
+/////----------End of $(document).ready(func({...}))--------///////////
+
+
+
+function start(startingMinutes){
+  
+  
+  let intervalId;
+  let time = startingMinutes * 60;
+
+
+  $("#start").click(function(){
+    let isPaused = false;
+    if(!isPaused){
+      intervalId = setInterval(countdownEvent,1000);
+    }
+  
+    if(startingMinutes === 25){
+      $("#shortBreakTimer, #longBreakTimer").prop('disabled', true);
+      $("#pomodoroTimer").prop('disabled', false);
+    console.log(startingMinutes)
+    }
+    else if(startingMinutes === 5){
+      $("#pomodoroTimer, #longBreakTimer").prop('disabled', true);
+      $("#shortBreakTimer").prop('disabled', false);
+      console.log(startingMinutes)
+    }
+    else if(startingMinutes === 15){
+      $("#pomodoroTimer, #shortBreakTimer").prop('disabled', true);
+      $("#longBreakTimer").prop('disabled', false);
+      console.log(startingMinutes)
+    }
+    $('#start').hide();
+    $('#pause, #reset').show();
+    // console.log("Started")
+    // console.log(isPaused)
+  })
+
+
+  $("#pause").click(function(){
+    clearInterval(intervalId);
+    isPaused = true;
+
+    $('#pause').hide();
+    $('#start, #reset').show();
+    $('#start').text("Resume");
+    // console.log("Paused")
+    // console.log(isPaused)
+  })
+  
+
+
+  $("#reset").click(function(){
+    clearInterval(intervalId);
+    // console.log(intervalId)
+    // console.log(startingMinutes)
+    console.log("I am interval ID: "+intervalId)
+    startingMinutes = startingMinutes < 10 ? '0' + startingMinutes : startingMinutes;
+    countdownEl.innerHTML = `${startingMinutes}:00`;
+    $("#pomodoroTimer, #shortBreakTimer, #longBreakTimer").prop('disabled', false);
+    $('#reset,#pause').hide();
+    $('#start').show();
+    $('#start').text("Start");
+  })
+
+
+
+  const countdownEl = document.getElementById("pomoDisplay"); //Displaying Timer on Screen
+  
+  function countdownEvent(){
+    let minutes = Math.floor(time/60);
+    let seconds = time % 60;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0'+ seconds : seconds;
+    countdownEl.innerHTML = `${minutes}:${seconds}`;
+    time--;
+    console.log(time);
+
+    if (time < 0){
+      clearInterval(intervalId);
+    }
   }
   
-  setInterval(showTime, 1000);
+}
 
 
-  ////////////////////// Quotes Data ////////////////////////////////////////
-
-    const api_url = "https://type.fit/api/quotes";
-    
-    async function getQuote() {
-      try{
-        const response = await fetch(api_url);
-        const data = await response.json();
-
-        const randomIndex = Math.floor(Math.random() * data.length);
-        const randomQuote = data[randomIndex].text;
-        const randomAuthor = data[randomIndex].author.split(",")[0];
-
-        if (randomAuthor == 'type.fit'){
-          document.getElementById("author").innerHTML = "- Anonymous";
-        }
-        else{
-          document.getElementById("author").innerHTML = "- "+ randomAuthor;
-        }
-
-        //console.log("Quote:", randomQuote);
-        document.getElementById("text").innerHTML = '"'+ randomQuote +'"';
-        
-        //console.log("Author:", randomAuthor);
-
-      } catch(error){
-        console.error("Error fetching quotes:", error);
-      }
-    }
-    getQuote();
-
-    setInterval(getQuote, 10000);
 
 
-  //////////////////////// Task section //////////////////////////
-    
-
-    // Get references to HTML elements
-    const taskInput = document.getElementById("taskInput");
-    const taskList = document.getElementById("taskList");
-    const completedTask = document.getElementById("completedTask");
-
-    
-    // Event listener for adding a new task
-    window.addTask = function () {
-
-      const taskText = taskInput.value.trim();
+///Task
+{
+  let tasks = [];
+  let taskID = 0;
+  // Function to render tasks
+  function renderTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
       
-      if (taskText !== "") {
+      tasks.forEach((task, index) => {
+          const card = document.createElement('div');
+          card.classList.add('card');
+
+          const contentTextbox = document.createElement('div');
+          contentTextbox.classList.add('content-text');
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.checked = task.completed;
+          
+          checkbox.addEventListener('change', () => toggleCompleted(index));
+
+          const span = document.createElement('span');
+          span.textContent = task.content;
+          if (task.completed) {
+              span.classList.add('completed');
+          }
+
+          const editInput = document.createElement('input');
+          editInput.type = 'text';
+          editInput.style.display = 'none';
+
+          const buttonContainer = document.createElement('div');
+          buttonContainer.classList.add('button-container');
+
+          const editButton = document.createElement('button');
+          editButton.textContent = 'Edit';
+          editButton.addEventListener('click', () => toggleEdit(index));
+
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.addEventListener('click', () => deleteTask(index));
+
+          contentTextbox.appendChild(checkbox);
+          contentTextbox.appendChild(span);
+          contentTextbox.appendChild(editInput);
+          card.appendChild(contentTextbox);
+          card.appendChild(buttonContainer);
+          buttonContainer.appendChild(editButton);
+          buttonContainer.appendChild(deleteButton);
+
+          taskList.appendChild(card);
+      });
+  }
+
+  // Function to add a new task
+  function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const content = taskInput.value.trim();
+      
+      if (content !== '') {
         
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <input type="checkbox" class="largerCheckbox" onchange="completeTask(this)">
-          <span>${taskText}</span>
-          <button onclick="removeTask(this)" style="background:none; border:none; font-size:18px; "><i class="fa fa-trash" aria-hidden="true" ></i></button>
-        `;
-        taskList.appendChild(li);
-        taskInput.value = "";
+        tasks.push({ content, completed: false });
+        taskInput.value = '';
+        taskID = taskID + 1;
+        renderTasks();
+        console.log("Task Input: "+ content);
+        console.log("Task Input: "+ taskID);
       }
-    }
+  }
 
-    // Event listener for completing a task
-    window.completeTask = function (checkbox) {
-      const li = checkbox.closest("li");
-      if (checkbox.checked) {
-        //span.style.textDecoration = "line-through";
-        completedTask.appendChild(li);
-       
-        //li.remove()
+  // Function to toggle task completion status
+  function toggleCompleted(index) {
+      tasks[index].completed = !tasks[index].completed;
+      renderTasks();
+  }
+
+  // Function to toggle task edit mode
+  function toggleEdit(index) {
+      const card = document.querySelectorAll('.card')[index];
+      const span = card.querySelector('span');
+      const editInput = card.querySelector('input[type="text"]');
+      const editButton = card.querySelector('button');
+
+      if (editInput.style.display === 'none') {
+          span.style.display = 'none';
+          editInput.style.display = 'inline';
+          editInput.value = span.textContent;
+          editButton.textContent = 'Save';
       } else {
-        taskList.appendChild(li);
+          span.textContent = editInput.value;
+          tasks[index].content = editInput.value;
+          span.style.display = 'inline';
+          editInput.style.display = 'none';
+          editButton.textContent = 'Edit';
       }
-    }
-    // Event listener for removing a task
-    window.removeTask = function (button, taskId) {
+  }
 
-      const li = button.closest("li");
-      li.remove();
-    }
-    
-  
-    // Event listener for pressing Enter key
-    taskInput.addEventListener("keyup", function (event) {
-      if (event.key === "Enter") {
-        addTask();
-      }
-    });
+  // Function to delete a task
+  function deleteTask(index) {
+      tasks.splice(index, 1);
+      renderTasks();
+  }
 
-
-    
-
-});
-
-
-  
+  // Initial render
+  renderTasks();
+}

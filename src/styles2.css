@@ -1,0 +1,85 @@
+.clock{
+    display: flex;
+    font-size: 3rem;
+    justify-content: center;
+}
+
+.card{
+    margin-top: 6px;
+    padding: 12px;
+}
+.card button{
+    margin-top: 12px;
+    margin-left: 12px;
+}
+.completed{
+    text-decoration: line-through;
+}
+
+
+@media only screen and (max-width: 1500px) {
+    .content-text span{
+        text-align: left;
+        width: 1050px !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+
+}
+
+@media only screen and (max-width: 1400px) {
+    .content-text span{
+        text-align: left;
+        width: 900px !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
+@media only screen and (max-width: 1670px) {
+    .content-text span{
+        text-align: left;
+        width: auto !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
+@media only screen and (max-width: 1500px) {
+    .card .content-text span{
+        text-align: left;
+        width: auto !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .content-text span{
+        text-align: left;
+        width: 700px !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
+@media only screen and (max-width: 992px) {
+    .content-text span{
+        text-align: left;
+        width: 470px !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .content-text span{
+        text-align: left;
+        width: 280px !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
+@media only screen and (max-width: 520px) {
+    .content-text span{
+        text-align: left;
+        width: auto !important;
+        margin-right: 24px ;
+        margin-left: 24px ;
+    }
+}
